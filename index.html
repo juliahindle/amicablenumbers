@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Amicable Numbers</title>
+	<style type="text/css">
+		html,body,input {font-size:30px;}
+	</style>
+	<script language="javascript">
+		function calculate()
+		{
+			num1 = document.getElementById("num1").value;
+			num2 = document.getElementById("num2").value;
+			output = document.getElementById("output")
+			factors1 = getFactors(num1)
+			factors2 = getFactors(num2)
+
+			output.innerHTML = ""	// clear out previous outputs
+
+			output.innerHTML += "Factors of " + num1 + ": "
+			showFactors(factors1)
+			output.innerHTML += "</br>"
+
+			output.innerHTML += "Factors of " + num2 + ": "
+			showFactors(factors2)
+			output.innerHTML += "</br></br>"
+
+
+			sum1 = addFactors(factors1);
+			sum2 = addFactors(factors2);
+
+			if (sum1 == num2 && sum2 == num1)
+			{
+				output.innerHTML += num1 + " and " + num2 + " are amicable.";
+			}
+			else
+			{
+				output.innerHTML += num1 + " and " + num2 + " are not amicable.";
+			}
+		}
+
+		function isFactor(num, test)
+		{
+			return (num % test == 0);
+		}
+
+		/* tests of isFactor
+		alert(isFactor(2, 1))	// Eval: true
+		alert(isFactor(3, 2)) 	// Eval: true
+		*/
+
+		function showFactors(arr)
+		{
+			document.getElementById("output").innerHTML += arr.join(" ");
+		}
+
+		/* tests of showFactors	
+		showFactors([1, 2, 3])	// Eval: 1 2 3
+		showFactors([-1, 3, 4]) // Eval: -1 3 4
+		*/
+
+		function addFactors(arr)
+		{
+			return arr.reduce((a,b) => a + b, 0);
+		}
+
+		/* tests of addFactors
+		alert(addFactors([3, 2, 1]))			// Eval: 6
+		alert(addFactors([-1000, 3, 4000]))		// Eval: 3003
+		*/
+
+		function getFactors(num)
+		{
+			if (num <= 0) return;	// bad value
+
+			half = Math.floor(num / 2);
+	        arr = new Array();
+
+	        for (i = 1; i <= half; i++)
+		        if (isFactor(num, i)) arr.push(i);
+		    
+		    return arr;
+		}
+
+		/* tests of getFactors
+		alert(getFactors(9))	//Eval: 1,3
+		alert(getFactors(284))	//Eval: 1,2,4,71,142
+		*/
+
+	</script>
+</head>
+<body>	
+	<h1>Amicable Numbers</h1>
+	<form name="form1">
+		First Number <input type="text" id="num1"><br />
+		Second Number <input type="text" id="num2"><br />
+		<input type="button" value = "Calculate"
+				onclick ="calculate()">
+	</form>
+	<p id="output"></p>
+</body>
+</html>
